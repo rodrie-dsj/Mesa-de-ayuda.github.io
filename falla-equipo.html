@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reportar Falla en Equipo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a22;
+    --border: rgba(255,255,255,0.08);
+    --text: #f0ede8;
+    --muted: #888;
+    --accent: #80cbc4;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1.25rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+    transition: color 0.15s;
+  }
+  .back:hover { color: var(--text); }
+
+  .top-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: rgba(128,203,196,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(128,203,196,0.25);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 span {
+    background: linear-gradient(90deg, #80cbc4, #b39ddb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--text);
+    font-weight: 300;
+  }
+
+  .section ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .section ul li {
+    font-size: 0.9rem;
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .section ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+  }
+
+  .cat-chip {
+    background: rgba(128,203,196,0.1);
+    border: 1px solid rgba(128,203,196,0.2);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 300;
+  }
+
+  .cat-chip .icon { font-size: 15px; }
+
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-label { color: var(--muted); min-width: 100px; font-weight: 300; }
+  .info-value { color: var(--text); font-weight: 400; }
+
+  .alert {
+    background: rgba(128,203,196,0.08);
+    border: 1px solid rgba(128,203,196,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--text);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .cta-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent);
+    color: #0f0f13;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .cta-btn:hover { opacity: 0.88; }
+
+  .cta-btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 0.9rem;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid rgba(128,203,196,0.35);
+    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 0.6rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .cta-btn-secondary:hover { background: rgba(128,203,196,0.07); }
+
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">← Volver al inicio</a>
+
+<div class="top-icon">⚠️</div>
+<h1>Falla en mi <span>equipo</span></h1>
+<p class="subtitle">Completá esta página con tu info y luego subila al servidor.</p>
+
+<!-- ═══════════════════════════════════════════════════════════
+     INSTRUCCIONES PARA VOS:
+     Reemplazá el contenido de las secciones de abajo.
+     Podés borrar, duplicar o editar las secciones a gusto.
+     ═══════════════════════════════════════════════════════════ -->
+
+<div class="alert">
+  <!-- EDITÁ ESTE AVISO: Podés borrarlo si no aplica -->
+  ⚡ Si el equipo no enciende o hay olor a quemado, desenchufarlo de inmediato y avisar al área de sistemas antes de tocarlo.
+</div>
+
+<div class="section">
+  <h2>Tipos de fallas que atendemos</h2>
+  <!-- EDITÁ ESTA GRILLA: Agregá, quitá o cambiá las categorías -->
+  <div class="category-grid">
+    <div class="cat-chip"><span class="icon">💻</span> No enciende</div>
+    <div class="cat-chip"><span class="icon">🐌</span> Muy lento</div>
+    <div class="cat-chip"><span class="icon">🖥️</span> Pantalla dañada</div>
+    <div class="cat-chip"><span class="icon">🔊</span> Sin sonido</div>
+    <div class="cat-chip"><span class="icon">🌐</span> Sin internet</div>
+    <div class="cat-chip"><span class="icon">⌨️</span> Teclado / mouse</div>
+    <div class="cat-chip"><span class="icon">💾</span> Disco / archivos</div>
+    <div class="cat-chip"><span class="icon">🖨️</span> Impresora</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Qué informar al reportar</h2>
+  <ul>
+    <!-- EDITÁ ESTA LISTA -->
+    <li>Nombre completo y curso / sector</li>
+    <li>Número o identificación del equipo (si lo tiene)</li>
+    <li>Descripción del problema con el mayor detalle posible</li>
+    <li>Desde cuándo ocurre la falla</li>
+    <li>Si el equipo tiene algún daño físico visible</li>
+    <li>Si el problema ocurre siempre o a veces</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Canales de reporte</h2>
+  <!-- EDITÁ ESTOS DATOS -->
+  <div class="info-row">
+    <span class="info-label">Presencial</span>
+    <span class="info-value">Sala de Sistemas, planta baja</span>
+  </div>
+  <div class="info-row">
+    <span class="info-label">WhatsApp</span>
+    <span class="info-value">+54 11 XXXX-XXXX</span>
+  </div>
+  <div class="info-row">
+    <span class="info-label">Email</span>
+    <span class="info-value">sistemas@colegio.edu.ar</span>
+  </div>
+  <div class="info-row">
+    <span class="info-label">Horario</span>
+    <span class="info-value">Lunes a viernes, 8:00 – 16:00</span>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Tiempos estimados</h2>
+  <p>
+    <!-- EDITÁ ESTE TEXTO -->
+    Las fallas de software y conectividad se resuelven en el día o al siguiente hábil. Las fallas de hardware pueden requerir más tiempo según disponibilidad de repuestos. Se te avisará cuando el equipo esté listo.
+  </p>
+</div>
+
+<!-- BOTÓN PRINCIPAL: Cambiá el href por el link de tu formulario, WhatsApp, etc. -->
+<a class="cta-btn" href="https://wa.me/549XXXXXXXXXX?text=Hola%2C%20quiero%20reportar%20una%20falla%20en%20mi%20equipo">
+  Reportar falla ahora
+</a>
+
+<!-- BOTÓN SECUNDARIO: Podés borrarlo si no aplica -->
+<a class="cta-btn-secondary" href="mailto:sistemas@colegio.edu.ar?subject=Reporte%20de%20falla%20en%20equipo">
+  Reportar por email
+</a>
+
+</body>
+</html>
